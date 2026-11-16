@@ -1,0 +1,89 @@
+<!doctype html>
+<!-- Code from d3-graph-gallery.com -->
+<html lang="de">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Ground Motion Dashboard</title>
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <h1 style="text-align: center">
+    NGA-West2 Dataset: HypD vs PGA with Magnitude Color Scale
+  </h1>
+
+  <!-- Dashboard Bereich: Links Hauptplot, Rechts Histogramm + Density -->
+  <div class="dashboard-container">
+    <div id="my_dataviz" style="position: relative"></div>
+
+    <div class="right-column">
+      <!-- Oben rechts: Magnituden-Histogramm (halb so hoch wie Hauptgrafik) -->
+      <div id="mag_histogram" class="side-chart">
+        <h3>Häufigkeit der Magnituden</h3>
+      </div>
+
+      <!-- Unten rechts: PGA Density Plot (halb so hoch wie Hauptgrafik) -->
+      <div id="pga_density" class="side-chart">
+        <h3>Dichteverteilung PGA (g)</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Steuerungselemente -->
+  <div class="controls">
+    <!-- 0. Lokale CSV-Datei von der Festplatte laden -->
+    <div class="file-upload-box">
+      <label for="csv-file-input" style="font-weight: bold; cursor: pointer;">
+        CSV-Datei von Festplatte laden:
+      </label>
+      <input type="file" id="csv-file-input" accept=".csv,text/csv" autocomplete="off">
+      <span id="file-status">Versuche Standarddatei (/NGA_West2.csv) zu laden...</span>
+    </div>
+    <!-- 1. Magnituden-Slider + Live-Anzeige -->
+    <div class="control-group">
+      <label for="mag-slider" style="font-weight: bold">
+        Min. Magnitude: <span id="mag-value">0.0</span>
+      </label>
+      <span id="visible-count" style="margin-left: 20px; color: #555; font-size: 14px"></span>
+      <br />
+      <input type="range" id="mag-slider" min="0" max="9.5" step="0.1" value="0" autocomplete="off"
+        style="width: 300px; cursor: pointer" />
+    </div>
+
+    <!-- 2. Checkboxen für Log-Skalen & Trendlinie -->
+    <div class="control-group">
+      <label style="font-weight: bold; margin-right: 15px; cursor: pointer">
+        <input type="checkbox" id="log-x-checkbox" checked autocomplete="off" />
+        Log X-Achse (Distanz)
+      </label>
+      <label style="font-weight: bold; margin-right: 15px; cursor: pointer">
+        <input type="checkbox" id="log-y-checkbox" checked autocomplete="off" />
+        Log Y-Achse (PGA)
+      </label>
+      <label style="font-weight: bold; color: #0056b3; cursor: pointer">
+        <input type="checkbox" id="trendline-checkbox" checked autocomplete="off" />
+        Trendlinie anzeigen
+      </label>
+      <span id="trendline-stats" style="margin-left: 15px; font-size: 13px; color: #333"></span>
+    </div>
+
+    <!-- 3. Radio Buttons für die X-Achsen-Metrik -->
+    <div>
+      <strong>Distanz-Metrik:</strong><br />
+      <label style="cursor: pointer"><input type="radio" name="distance" value="HypD (km)" checked autocomplete="off" />
+        HypD (km)</label>
+      <label style="cursor: pointer; margin-left: 15px"><input type="radio" name="distance" value="EpiD (km)"
+          autocomplete="off" />
+        EpiD (km)</label>
+      <label style="cursor: pointer; margin-left: 15px"><input type="radio" name="distance"
+          value="Joyner-Boore Dist. (km)" autocomplete="off" />
+        Joyner-Boore Dist. (km)</label>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+
+</html>

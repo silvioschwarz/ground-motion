@@ -1,0 +1,546 @@
+"Record Sequence Number": "1", EQID: "0001", "Earthquake Name": "Helena. Montana-01", YEAR: "1935", MODY: "1031", HRMN: "1838", "Station Name": "Carroll College", "Station Sequence Number": "197", "Station ID  No.": "2022", "Earthquake Magnitude": "6,00", … }
+​
+Age: "-999"
+​
+"Ave Strike (deg)": "268.01"
+​
+"Average Vr/Vs": "-999"
+​
+"Avg Fault Disp (cm)": "-999"
+​
+"Avg Slip Velocity (cm/s)": "-999"
+​
+Basin: "-999"
+​
+"Basis for Inference of Surface Rupture": "sfdoc"
+​
+"Bray and Rodriguez-Marek SGS": "B"
+​
+CRjb: "0"
+​
+"Campbell R Dist. (km)": "-999"
+​
+"Campbell's GEOCODE": "C"
+​
+"ClstD (km)": "2.86"
+​
+"Column Not Used": "-999"
+​
+"Coseismic Surface Rupture (Including Inferred)": "0"
+​
+"Coseismic Surface Rupture: 1=Yes; 0=No;    -999=Unknown": "0"
+​
+D: "-999"
+​
+"Damping (%)": "20"
+​
+"Depositional History": "-999"
+​
+Depth: "-999"
+​
+"Depth to Basement Rock": "-999"
+​
+"Depth to Franciscan Rock (km)": "-999"
+​
+"Depth to Top Of Fault Rupture Model": "1974"
+​
+"Depth to Top of Shallowest Asperity (km)": "-999"
+​
+"Dip (deg)": "75"
+​
+EQID: "0001"
+​
+"Earthquake Magnitude": "6,00"
+​
+"Earthquake Name": "Helena. Montana-01"
+​
+"Earthquake in Extensional Regime: 1=Yes; 0=No": "0"
+​
+"EpiD (km)": "6.31"
+​
+"Existence of Shallow Asperity: 0=No; 1=Yes": "-999"
+​
+"FW/HW Indicator": "na"
+​
+Factor: "1.25"
+​
+"Fault Name": "-999"
+​
+"Fault Rupture Area (km^2)": "68.1"
+​
+"Fault Rupture Length for Calculation of Ry (km)": "16.2"
+​
+"Fault Rupture Width (km)": "4.2"
+​
+"File Name (Horizontal 1)": "HELENA.A\\A-HMC180.AT2"
+​
+"File Name (Horizontal 2)": "HELENA.A\\A-HMC270.AT2"
+​
+"File Name (Vertical)": "HELENA.A\\A-HMCDWN.AT2"
+​
+"Finite Rupture Model: 1=Yes;  0=No": "0"
+​
+"GMX's C1": "E"
+​
+"GMX's C2": "Z"
+​
+"GMX's C3": "A"
+​
+"Geological Unit": "-999"
+​
+Geology: "-999"
+​
+"Grain Size": "-999"
+​
+"H1 azimth (degrees)": "180"
+​
+"H2 azimith (degrees)": "270"
+​
+"HP-H1 (Hz)": "0.13"
+​
+"HP-H2 (Hz)": "0.09"
+​
+HRMN: "1838"
+​
+"HypD (km)": "8.71"
+​
+"Hypocenter Depth (km)": "6"
+​
+"Hypocenter Latitude (deg)": "46.61"
+​
+"Hypocenter Longitude (deg)": "-111.96"
+​
+IDPv4: "-999"
+​
+INSTLOC: "-999"
+​
+Idirectivity: "0"
+​
+"Instrument Damping": "-999"
+​
+"Instrument Model": "-999"
+​
+"Instrument Nat. Freq.": "-999"
+​
+"Instrument Type": "-999"
+​
+"Joyner-Boore Dist. (km)": "2.07"
+​
+"LP-H1 (Hz)": "15,000"
+​
+"LP-H2 (Hz)": "15,000"
+​
+"Late P-trigger": "-999"
+​
+"Late S-trigger": "-999"
+​
+"Lowest Usable Freq - Ave. Component (Hz)": "0.1625"
+​
+"Lowest Usable Freq - H1 (Hz)": "0.1625"
+​
+"Lowest Usable Freq - H2 (H2)": "0.1125"
+​
+MODY: "1031"
+​
+"Magnitude Sample Size": "-999"
+​
+"Magnitude Type": "Mw"
+​
+"Magnitude Uncertainty: Kagan Model": "0.3"
+​
+"Magnitude Uncertainty: Statistical": "-999"
+​
+"Magnitude Uncertainty: Study Class": "0.3"
+​
+"Measured/Inferred Class": "3b_4b_4c"
+​
+"Mechanism Based on Rake Angle": "0"
+​
+"Mo (dyne.cm)": "1.12201845430197E+025"
+​
+"NEHRP Classification from CGS's Site Condition Map": "C"
+​
+"NGA Type": "-999"
+​
+"Northern CA/Southern CA - H11 Z1 (m)": "-999"
+​
+"Northern CA/Southern CA - H11 Z1.5 (m)": "-999"
+​
+"Northern CA/Southern CA - H11 Z2.5 (m)": "-999"
+​
+"Northern CA/Southern CA - S4 Z1 (m)": "-999"
+​
+"Northern CA/Southern CA - S4 Z1.5 (m)": "-999"
+​
+"Northern CA/Southern CA - S4 Z2.5 (m)": "-999"
+​
+Owner: "USGS"
+​
+"P-plunge (deg)": "2.9"
+​
+"P-trend (deg)": "316.29"
+​
+"PEA Processing Flag": "PEA"
+​
+"PGA (g)": "0.15702"
+​
+"PGD (cm)": "3.0052"
+​
+"PGV (cm/sec)": "1,0054E+04"
+​
+"Percent of Moment Release in the Top 5 Km of Crust": "-999"
+​
+"Phi.D (deg)": "12.68"
+​
+"Preferred NEHRP Based on Vs30": "C"
+​
+"Preferred Rupture Velocity (km/s)": "-999"
+​
+Quality_Flag: "-999"
+​
+"Rake Angle (deg)": "160"
+​
+"Rcebe (m)": "-999"
+​
+"Rebe (m)": "-999"
+​
+"Record Sequence Number": "1"
+​
+"Rfn.Hyp": "-999,00"
+​
+"Rfp.Hyp": "-999,00"
+​
+"Rise Time (s)": "-999"
+​
+"RmsD (km)": "7.4"
+​
+"RotD percentile": "50"
+​
+"Rsbe (m)": "-999"
+​
+"Rsbe1 (m)": "-999"
+​
+Rx: "-2.07"
+​
+"Ry 2": "8.04638572346749"
+​
+"SSGA (Dip Slip)": "0.97"
+​
+"SSGA (Strike Slip)": "0.29"
+​
+STORIES: "-999"
+​
+"Sigma of Vs30 (in natural log Units)": "0.37"
+​
+"Site Visited": "-999"
+​
+"Slip Rate (mm/Yr)": "-999"
+​
+"Source to Site Azimuth (deg)": "-90"
+​
+"Spectra Quality Flag": "0"
+​
+"Static Stress Drop (bars)": "-999"
+​
+"Station ID  No.": "2022"
+​
+"Station Latitude": "46.58"
+​
+"Station Longitude": "-112.03"
+​
+"Station Name": "Carroll College"
+​
+"Station Sequence Number": "197"
+​
+"Strike (deg)": "268"
+​
+T: "-999"
+​
+"T-plunge (deg)": "24.62"
+​
+"T-trend (deg)": "224.96"
+​
+"T0.010S": "0.1607692"
+​
+"T0.020S": "0.1620131"
+​
+"T0.022S": "0.1634414"
+​
+"T0.025S": "0.1664281"
+​
+"T0.029S": "0.1727963"
+​
+"T0.030S": "0.1749894"
+​
+"T0.032S": "0.1796827"
+​
+"T0.035S": "0.1877788"
+​
+"T0.036S": "0.1903203"
+​
+"T0.040S": "0.2009381"
+​
+"T0.042S": "0.2059351"
+​
+"T0.044S": "0.21123"
+​
+"T0.045S": "0.2134646"
+​
+"T0.046S": "0.2160214"
+​
+"T0.048S": "0.2201658"
+​
+"T0.050S": "0.2246607"
+​
+"T0.055S": "0.2372799"
+​
+"T0.060S": "0.2475403"
+​
+"T0.065S": "0.2539887"
+​
+"T0.067S": "0.2559088"
+​
+"T0.070S": "0.2562287"
+​
+"T0.075S": "0.2526788"
+​
+"T0.080S": "0.2436637"
+​
+"T0.085S": "0.2362229"
+​
+"T0.090S": "0.2333057"
+​
+"T0.095S": "0.2337075"
+​
+"T0.100S": "0.2318812"
+​
+"T0.110S": "0.231648"
+​
+"T0.120S": "0.2302592"
+​
+"T0.130S": "0.2286815"
+​
+"T0.133S": "0.2270648"
+​
+"T0.140S": "0.2203109"
+​
+"T0.150S": "0.2128946"
+​
+"T0.160S": "0.1995817"
+​
+"T0.170S": "0.1887288"
+​
+"T0.180S": "0.1864001"
+​
+"T0.190S": "0.185237"
+​
+"T0.200S": "0.1795091"
+​
+"T0.220S": "0.1651542"
+​
+"T0.240S": "0.1595441"
+​
+"T0.250S": "0.1619947"
+​
+"T0.260S": "0.1657387"
+​
+"T0.280S": "0.1665377"
+​
+"T0.290S": "0.1684834"
+​
+"T0.300S": "0.1709552"
+​
+"T0.320S": "0.1721989"
+​
+"T0.340S": "0.1683722"
+​
+"T0.350S": "0.1649186"
+​
+"T0.360S": "0.1598658"
+​
+"T0.380S": "0.1456193"
+​
+"T0.400S": "0.127214"
+​
+"T0.420S": "0.114958"
+​
+"T0.440S": "0.1118961"
+​
+"T0.450S": "0.1101095"
+​
+"T0.460S": "0.108021"
+​
+"T0.480S": "0.1032478"
+​
+"T0.500S": "0.09838559"
+​
+"T0.550S": "0.08579459"
+​
+"T0.600S": "0.07768565"
+​
+"T0.650S": "0.07543276"
+​
+"T0.667S": "0.07413715"
+​
+"T0.700S": "0.07116859"
+​
+"T0.750S": "0.06650677"
+​
+"T0.800S": "0.07036982"
+​
+"T0.850S": "0.0726648"
+​
+"T0.900S": "0.07316075"
+​
+"T0.950S": "0.07226197"
+​
+"T1.000S": "0.07053641"
+​
+"T1.100S": "0.06527283"
+​
+"T1.200S": "0.05861166"
+​
+"T1.300S": "0.05177004"
+​
+"T1.400S": "0.04534688"
+​
+"T1.500S": "0.03954288"
+​
+"T1.600S": "0.0346472"
+​
+"T1.700S": "0.03246947"
+​
+"T1.800S": "0.03027028"
+​
+"T1.900S": "0.02830008"
+​
+"T10.000S": "0.001046872"
+​
+"T11.000S": "0.0008791088"
+​
+"T12.000S": "0.0007484025"
+​
+"T13.000S": "0.0006445872"
+​
+"T14.000S": "0.0005607998"
+​
+"T15.000S": "0.0004922384"
+​
+"T2.000S": "0.02630637"
+​
+"T2.200S": "0.02250342"
+​
+"T2.400S": "0.01929476"
+​
+"T2.500S": "0.01789574"
+​
+"T2.600S": "0.01661981"
+​
+"T2.800S": "0.01433154"
+​
+"T20.000S": "0.0002839957"
+​
+"T3.000S": "0.0123525"
+​
+"T3.200S": "0.01065686"
+​
+"T3.400S": "0.009216096"
+​
+"T3.500S": "0.008571669"
+​
+"T3.600S": "0.007988232"
+​
+"T3.800S": "0.006997181"
+​
+"T4.000S": "0.006193104"
+​
+"T4.200S": "0.005600906"
+​
+"T4.400S": "0.005137057"
+​
+"T4.600S": "0.004745314"
+​
+"T4.800S": "0.004385696"
+​
+"T5.000S": "0.004056304"
+​
+"T5.500S": "0.003347987"
+​
+"T6.000S": "0.002781054"
+​
+"T6.500S": "0.00232607"
+​
+"T7.000S": "0.001972334"
+​
+"T7.500S": "0.001749825"
+​
+"T8.000S": "0.001562237"
+​
+"T8.500S": "0.001403018"
+​
+"T9.000S": "0.001266666"
+​
+"T9.500S": "0.001148997"
+​
+"TYPE
+(CRjb = 10)": "C1"
+​
+"TYPE
+(CRjb = 2)": "C1"
+​
+"TYPE
+(CRjb = 20)": "C1"
+​
+"TYPE
+(CRjb = 40)": "C1"
+​
+"TYPE
+(CRjb = 5)": "C1"
+​
+"TYPE(CRjb = 0)": "C1"
+​
+"Theta.D (deg)": "29.94"
+​
+Tp: "-999"
+​
+"Type of Filter": "A"
+​
+"Type of Recording": "A"
+​
+U: "-999"
+​
+"Unused Column": "-999"
+​
+"Vs30 (m/s) selected for analysis": "593.35"
+​
+X: "0.34"
+​
+XCI: "-999"
+​
+XCI1: "-999"
+​
+Y: "0.99"
+​
+YEAR: "1935"
+​
+ctildepr: "-999"
+​
+d: "-999"
+​
+"h (m)": "-999"
+​
+"hnorm (m)": "-999"
+​
+npass: "1"
+​
+nroll: "2.5"
+​
+s: "-999
+
+
+
+
+<script src="https://d3js.org/d3.v4.js"></script>
+
+
+
