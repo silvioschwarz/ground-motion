@@ -1,66 +1,214 @@
- body {
-      font-family: sans-serif;
-      margin: 15px;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    .grid line {
-      stroke: #e0e0e0;
-      stroke-opacity: 0.7;
-      shape-rendering: crispEdges;
-    }
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
 
-    .grid path {
-      stroke-width: 0;
-    }
+header {
+  text-align: center;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
 
-    /* Flexbox-Layout: Hauptgrafik links, Histogramm & Density rechts daneben */
-    .dashboard-container {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-start;
-      gap: 20px;
-    }
+header h1, header h2 {
+  margin: 0;
+}
 
-    .right-column {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 700px;
-      /* Exakt so hoch wie das Haupt-SVG (700px) */
-    }
+main {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) 5fr 2fr;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  align-items: stretch; /* Zwingt alle 3 Spalten auf exakt dieselbe Höhe */
+}
 
-    .side-chart h3 {
-      margin: 0 0 4px 55px;
-      font-size: 14px;
-      color: #333;
-    }
+/* Linke Spalte: Controls */
+.left-column {
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+  min-width: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 5px;
+}
 
-    .controls {
-      margin-top: 15px;
-      padding: 15px;
-      background: #f8f9fa;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      max-width: 1480px;
-    }
+/* Zwingt den Slider exakt in die Breite seines Eltern-Containers */
+#mag-slider,
+.control-group input[type="range"] {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  margin: 0;
+  display: block;
+}
 
-    .control-group {
-      margin-bottom: 12px;
-    }
+.file-upload-box {
+  width: 100%;
+  padding: 10px 14px;
+  background: #e9ecef;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 
-    .file-upload-box {
-      padding: 10px 14px;
-      background: #e9ecef;
-      border-radius: 5px;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
+#file-status {
+  font-size: 13px;
+  color: #333;
+  font-weight: bold;
+}
 
-    #file-status {
-      font-size: 13px;
-      color: #333;
-      font-weight: bold;
-    }
+.control-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.control-group label {
+  display: flex;
+  flex-direction: column; /* Setzt Slider sauber unter den Text */
+  gap: 6px;
+  width: 100%;
+}
+
+
+ul
+{
+    list-style-type: none;
+    margin: 0; 
+    padding: 0;
+}
+
+
+.middle-column {
+  grid-column: 2 / 3;
+  grid-row: 1 / 3;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#my_dataviz {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+}
+
+/* Canvas und SVG liegen exakt deckungsgleich übereinander */
+#my_dataviz > canvas,
+#my_dataviz > svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* SVG liegt über dem Canvas für Achsen/Trendlinie, blockiert aber keine Maus-Events */
+#my_dataviz > svg {
+  pointer-events: none;
+}
+
+/* Rechte Spalte: Seitendiagramme */
+.right-column {
+  grid-column: 3 / 4;
+  grid-row: 1 / 3;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.side-chart {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.side-chart h3 {
+  margin: 0 0 4px 55px;
+  font-size: 14px;
+  color: #333;
+  flex-shrink: 0;
+}
+
+#mag_histogram,
+#pga_density {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Alle SVGs passen sich exakt an ihren Container an ohne Verzerrung */
+#my_dataviz > svg,
+#mag_histogram > svg,
+#pga_density > svg {
+    width: 100%;
+  height: 100%;
+  max-height: 100%;
+  display: block;
+}
+
+/* Grid-Linien im Scatterplot */
+.grid line {
+  stroke: #e0e0e0;
+  stroke-opacity: 0.7;
+  shape-rendering: crispEdges;
+}
+
+.grid path {
+  stroke-width: 0;
+}
+
+/* Responsives Layout für schmale Bildschirme / Tablets */
+@media (max-width: 900px) {
+  body {
+    height: auto;
+    overflow: auto;
+  }
+
+  main {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    height: auto;
+  }
+
+  .left-column,
+  .middle-column,
+  .right-column {
+    grid-column: 1 / 2;
+    grid-row: auto;
+  }
+
+  #my_dataviz {
+    height: 60vh;
+  }
+
+  #mag_histogram,
+  #pga_density {
+    height: 35vh;
+  }
+}
