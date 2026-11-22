@@ -139,27 +139,25 @@ export default function GroundMotionDashboard({ preloadedRecords = [] }) {
 
           <div className="control-group">
             <div className="control-group-title">Distanz-Metrik</div>
-            <label className="control-row">
-              <input
-                type="radio"
-                name="distance"
-                value="HypD (km)"
-                defaultChecked
-              />
-              <span>HypD (km)</span>
-            </label>
-            <label className="control-row">
-              <input type="radio" name="distance" value="EpiD (km)" />
-              <span>EpiD (km)</span>
-            </label>
-            <label className="control-row">
-              <input
-                type="radio"
-                name="distance"
-                value="Joyner-Boore Dist. (km)"
-              />
-              <span>Joyner-Boore Dist. (km)</span>
-            </label>
+            {[
+              ["HypD (km)", "HypD (km)"],
+              ["EpiD (km)", "EpiD (km)"],
+              ["Joyner-Boore Dist. (km)", "Joyner-Boore Dist. (km)"],
+              ["R_rup_calc (km)", "R_rup (berechnet, km)"],
+              ["R_JB_calc (km)", "R_JB (berechnet, km)"],
+              ["R_w (km)", "R_w (Ø 2D-Ecken, km)"],
+              ["R_z (km)", "R_z (Ø 3D-Ecken, km)"],
+            ].map(([val, label]) => (
+              <label key={val} className="control-row">
+                <input
+                  type="radio"
+                  name="distance"
+                  value={val}
+                  defaultChecked={val === "HypD (km)"}
+                />
+                <span>{label}</span>
+              </label>
+            ))}
           </div>
         </div>
 
