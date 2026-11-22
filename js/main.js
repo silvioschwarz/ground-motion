@@ -108,4 +108,10 @@ if (row["PGA (g)"] === undefined) {
   }
 };
 
-App.Main.init();
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", function () {
+    App.Main.init();
+  });
+} else {
+  App.Main.init();
+}

@@ -49,7 +49,6 @@ export default function GroundMotionDashboard({ preloadedRecords = [] }) {
           cb.addEventListener("change", renderFilteredSources);
         });
 
-        // Initial nur die angehakten Datensätze zeichnen (Standard: nur NGA_West2)
         renderFilteredSources();
 
         return () => {
@@ -57,6 +56,9 @@ export default function GroundMotionDashboard({ preloadedRecords = [] }) {
             cb.removeEventListener("change", renderFilteredSources);
           });
         };
+      } else {
+        await import("../js/main.js");
+        window.App.Main?.init();
       }
     }
 
