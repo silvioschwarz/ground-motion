@@ -179,19 +179,22 @@ App.ScatterPlot = {
         return validX && validY;
       });
 
+    var maxX =
+      d3.max(plotData, function (d) {
+        return d.xVal;
+      }) || 2000;
+
     if (isLogX) {
-      this.x = d3.scaleLog().domain([0.1, 2000]).range([0, cfg.width]);
+      var upperLogX = Math.max(2000, Math.pow(10, Math.ceil(Math.log10(maxX))));
+      this.x = d3.scaleLog().domain([0.1, upperLogX]).range([0, cfg.width]);
     } else {
-      var maxX =
-        d3.max(plotData, function (d) {
-          return d.xVal;
-        }) || 500;
       this.x = d3
         .scaleLinear()
         .domain([0, maxX * 1.05])
         .nice()
         .range([0, cfg.width]);
     }
+
 
  
 var yExtent = d3.extent(plotData, function(d) { return d.yVal; });
