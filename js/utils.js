@@ -13,10 +13,33 @@ App.Utils = {
   },
 
   calcFaultDistances: function (p) {
+    var isValidCoord =
+      p.hypLat >= -90 &&
+      p.hypLat <= 90 &&
+      p.stLat >= -90 &&
+      p.stLat <= 90 &&
+      p.hypLon >= -180 &&
+      p.hypLon <= 180 &&
+      p.stLon >= -180 &&
+      p.stLon <= 180 &&
+      !(p.hypLat === 0 && p.hypLon === 0) &&
+      !(p.stLat === 0 && p.stLon === 0) &&
+      p.hypDepthKm >= 0 &&
+      p.hypDepthKm <= 700 &&
+      p.mw > 0 &&
+      p.mw <= 10;
+
+    if (!isValidCoord) {
+      return { rRup: NaN, rJB: NaN, rW: NaN, rZ: NaN };
+    }
+
     var clamp = function (v, min, max) {
       return Math.max(min, Math.min(max, v));
     };
     var rad = Math.PI / 180;
+
+    var validStrike = p.strikeDeg >= 0 && p.strikeDeg <= 360 ? p.strikeDeg : 0;
+    var validDip = p.dipDeg > 0 && p.dipDeg <= 90 ? p.dipDeg : 90;
 
     var lengthKm =
       p.lengthKm > 0 && p.lengthKm <= 1000
@@ -30,8 +53,8 @@ App.Utils = {
     var stNorth = (p.stLat - p.hypLat) * 111.132;
     var stEast = (p.stLon - p.hypLon) * 111.320 * Math.cos(p.hypLat * rad);
 
-    var strike = p.strikeDeg * rad;
-    var dip = p.dipDeg * rad;
+    var strike = validStrike * rad;
+    var dip = validDip * rad;
     var usN = Math.cos(strike);
     var usE = Math.sin(strike);
     var udN = -Math.sin(strike) * Math.cos(dip);
@@ -96,6 +119,10 @@ App.Utils = {
       corners.reduce(function (s, c) {
         return s + Math.hypot(stNorth - c.at(0), stEast - c.at(1), -c.at(2));
       }, 0) / 4;
+
+    if (rRup > 2000 || rW > 2000 || rZ > 2000) {
+      return { rRup: NaN, rJB: NaN, rW: NaN, rZ: NaN };
+    }
 
     return { rRup: rRup, rJB: rJB, rW: rW, rZ: rZ };
   },
