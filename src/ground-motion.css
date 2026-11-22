@@ -1,0 +1,207 @@
+.ground-motion-app {
+  box-sizing: border-box;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  color: #1f2937;
+  width: 100%;
+}
+
+.ground-motion-app *,
+.ground-motion-app *::before,
+.ground-motion-app *::after {
+  box-sizing: border-box;
+}
+
+.ground-motion-app .gm-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.ground-motion-app .gm-header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.ground-motion-app .gm-grid {
+  display: grid;
+  grid-template-columns: minmax(230px, 1fr) 4.5fr 2.2fr;
+  gap: 16px;
+  min-height: 680px;
+  width: 100%;
+  align-items: stretch;
+}
+
+.ground-motion-app .left-column {
+  min-width: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+}
+
+.ground-motion-app .file-upload-box {
+  width: 100%;
+  padding: 12px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ground-motion-app .file-upload-box input[type="file"] {
+  font-size: 12px;
+  width: 100%;
+}
+
+.ground-motion-app #file-status {
+  font-size: 12px;
+  line-height: 1.45;
+  color: #374151;
+}
+
+.ground-motion-app .control-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 12px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.ground-motion-app .control-group-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7280;
+  margin-bottom: 2px;
+}
+
+.ground-motion-app .control-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.ground-motion-app .slider-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  font-size: 13px;
+}
+
+.ground-motion-app input[type="range"] {
+  width: 100%;
+  margin: 0;
+  display: block;
+}
+
+.ground-motion-app .middle-column {
+  width: 100%;
+  min-width: 0;
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.ground-motion-app #my_dataviz {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 480px;
+  position: relative;
+}
+
+.ground-motion-app #my_dataviz > canvas,
+.ground-motion-app #my_dataviz > svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.ground-motion-app #my_dataviz > svg {
+  pointer-events: none;
+}
+
+.ground-motion-app .right-column {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ground-motion-app .side-chart {
+  flex: 1;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.ground-motion-app .side-chart h3 {
+  margin: 0 0 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  flex-shrink: 0;
+}
+
+.ground-motion-app #mag_histogram,
+.ground-motion-app #pga_density {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+.ground-motion-app #mag_histogram > svg,
+.ground-motion-app #pga_density > svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.ground-motion-app .grid line {
+  stroke: #e5e7eb;
+  stroke-opacity: 0.8;
+  shape-rendering: crispEdges;
+}
+
+.ground-motion-app .grid path {
+  stroke-width: 0;
+}
+
+@media (max-width: 1024px) {
+  .ground-motion-app .gm-grid {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: auto;
+  }
+
+  .ground-motion-app #my_dataviz {
+    height: 55vh;
+    min-height: 380px;
+  }
+
+  .ground-motion-app .side-chart {
+    height: 280px;
+  }
+}

@@ -25,50 +25,35 @@ App.Main = {
       return;
     }
 
-    var q = d3.queue();
-    var fileNames = [];
-
-    checkedNodes.forEach(function(node) {
-      var fileName = node.id.slice(0, -9) + ".csv"; // Entfernt "-checkbox"
-      fileNames.push(fileName);
-      q.defer(d3.csv, "data/" + fileName);
+    var fileNames = checkedNodes.map(function(node) {
+      return node.id.slice(0, -9) + ".csv"; // Entfernt "-checkbox"
     });
 
     d3.select("#file-status")
       .style("color", "#555")
       .text("Lade " + fileNames.length + " Datei(en)...");
 
-    q.awaitAll(function(error, results) {
-      if (error) {
+    Promise.all(
+      fileNames.map(function(fileName) {
+        return d3.csv("data/" + fileName).then(function(dataset) {
+          return dataset.map(function(row) {
+            return self.normalizeRow(row, fileName);
+          });
+        });
+      })
+    )
+      .then(function(results) {
+        var combinedData = results.flat();
+        App.Dashboard.render(combinedData, fileNames.join(", "));
+      })
+      .catch(function(error) {
         d3.select("#file-status")
           .style("color", "red")
           .text("Fehler beim Laden der CSV-Dateien.");
-        console.error(error);
-        return;
-      }
-
-      // In js/main.js innerhalb von q.awaitAll(function(error, results) { ... })
-if (error) {
-  var failedUrl = (error.target && error.target.responseURL) ? error.target.responseURL : fileNames.join(", ");
-  d3.select("#file-status")
-    .style("color", "red")
-    .text("Fehler: Datei nicht gefunden (" + failedUrl + ")");
-  console.error("CSV Ladefehler:", error);
-  return;
-}
-
-      var combinedData = [];
-
-      results.forEach(function(dataset, idx) {
-        var fileName = fileNames[idx];
-        dataset.forEach(function(row) {
-          combinedData.push(self.normalizeRow(row, fileName));
-        });
+        console.error("CSV Ladefehler:", error);
       });
-
-      App.Dashboard.render(combinedData, fileNames.join(", "));
-    });
   },
+
 
   normalizeRow: function(row, fileName) {
     row._sourceFile = fileName;

@@ -1,5 +1,6 @@
 window.App = window.App || {};
-
+const App = window.App;
+const d3 = window.d3;
 App.Histogram = {
   svg: null,
   x: null,

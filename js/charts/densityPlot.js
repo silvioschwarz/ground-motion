@@ -1,5 +1,6 @@
 window.App = window.App || {};
-
+const App = window.App;
+const d3 = window.d3;
 App.DensityPlot = {
   svg: null,
   xLog: null,

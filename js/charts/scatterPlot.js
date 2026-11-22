@@ -1,4 +1,6 @@
 window.App = window.App || {};
+const App = window.App;
+const d3 = window.d3;
 
 App.ScatterPlot = {
   svg: null,
@@ -310,15 +312,14 @@ if (isLogY) {
     var cfg = App.Config.mainChart;
 
     this.canvas
-      .on("mousemove", function () {
+      .on("mousemove", function (event) {
         if (!self.quadtree) return;
 
-        // Mausposition relativ zum Plot-Bereich berechnen
-        var coords = d3.mouse(this);
+        // D3 v7: d3.pointer(event, this) statt d3.mouse(this)
+        var coords = d3.pointer(event, this);
         var mouseX = coords[0] - cfg.margin.left;
         var mouseY = coords[1] - cfg.margin.top;
 
-        // Nächsten Punkt im Umkreis von 12 Pixeln im Quadtree suchen
         var closest = self.quadtree.find(mouseX, mouseY, 12);
 
         if (closest) {
@@ -330,8 +331,8 @@ if (isLogY) {
           self.canvas.style("cursor", "pointer");
           self.tooltip
             .style("opacity", 1)
-            .style("left", d3.event.pageX + 14 + "px")
-            .style("top", d3.event.pageY - 28 + "px")
+            .style("left", event.pageX + 14 + "px")
+            .style("top", event.pageY - 28 + "px")
             .html(
               "<strong>Magnitude:</strong> " +
                 (!isNaN(closest.mag) ? closest.mag.toFixed(1) : "k. A.") +
@@ -365,6 +366,7 @@ if (isLogY) {
         self.tooltip.style("opacity", 0);
       });
   },
+
 
   updateTrendline: function (plotData, isLogX, isLogY, showTrendline) {
     if (!showTrendline || plotData.length < 2) {
