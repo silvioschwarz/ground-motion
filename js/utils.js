@@ -2,12 +2,102 @@ window.App = window.App || {};
 
 App.Utils = {
   parseNum: function (val) {
-    return +String(val).replace(",", ".");
+    if (val === undefined || val === null) return NaN;
+    var s = String(val).trim().replace(",", ".");
+    return s === "" ? NaN : +s;
   },
 
   isValidValue: function (val) {
     var num = this.parseNum(val);
     return !isNaN(num) && num > 0;
+  },
+
+  calcFaultDistances: function (p) {
+    var clamp = function (v, min, max) {
+      return Math.max(min, Math.min(max, v));
+    };
+    var rad = Math.PI / 180;
+
+    var lengthKm =
+      p.lengthKm > 0 && p.lengthKm <= 1000
+        ? p.lengthKm
+        : Math.pow(10, -2.44 + 0.59 * p.mw);
+    var widthKm =
+      p.widthKm > 0 && p.widthKm <= 300
+        ? p.widthKm
+        : Math.pow(10, -1.01 + 0.32 * p.mw);
+
+    var stNorth = (p.stLat - p.hypLat) * 111.132;
+    var stEast = (p.stLon - p.hypLon) * 111.320 * Math.cos(p.hypLat * rad);
+
+    var strike = p.strikeDeg * rad;
+    var dip = p.dipDeg * rad;
+    var usN = Math.cos(strike);
+    var usE = Math.sin(strike);
+    var udN = -Math.sin(strike) * Math.cos(dip);
+    var udE = Math.cos(strike) * Math.cos(dip);
+    var udD = Math.sin(dip);
+
+    var sinDip = Math.max(Math.sin(dip), 1e-4);
+    var offsetS = -0.5 * lengthKm;
+    var offsetD;
+    var p0D;
+
+    if (p.zTorKm >= 0 && p.zTorKm <= 100) {
+      p0D = p.zTorKm;
+      offsetD = (p0D - p.hypDepthKm) / sinDip;
+    } else {
+      offsetD = Math.max(-0.5 * widthKm, -p.hypDepthKm / sinDip);
+      p0D = Math.max(0, p.hypDepthKm + offsetD * udD);
+    }
+
+    var p0N = offsetS * usN + offsetD * udN;
+    var p0E = offsetS * usE + offsetD * udE;
+
+    var vN = stNorth - p0N;
+    var vE = stEast - p0E;
+    var vD = -p0D;
+
+    var projS = clamp(vN * usN + vE * usE, 0, lengthKm);
+    var projD = clamp(vN * udN + vE * udE + vD * udD, 0, widthKm);
+
+    var cRupN = p0N + projS * usN + projD * udN;
+    var cRupE = p0E + projS * usE + projD * udE;
+    var cRupD = p0D + projD * udD;
+    var rRup = Math.hypot(stNorth - cRupN, stEast - cRupE, -cRupD);
+
+    var wHoriz = widthKm * Math.cos(dip);
+    var udHorizN = -Math.sin(strike);
+    var udHorizE = Math.cos(strike);
+    var projSH = clamp(vN * usN + vE * usE, 0, lengthKm);
+    var projDH = clamp(vN * udHorizN + vE * udHorizE, 0, wHoriz);
+    var rJB = Math.hypot(
+      stNorth - (p0N + projSH * usN + projDH * udHorizN),
+      stEast - (p0E + projSH * usE + projDH * udHorizE)
+    );
+
+    var corners = [
+      [p0N, p0E, p0D],
+      [p0N + lengthKm * usN, p0E + lengthKm * usE, p0D],
+      [
+        p0N + lengthKm * usN + widthKm * udN,
+        p0E + lengthKm * usE + widthKm * udE,
+        p0D + widthKm * udD,
+      ],
+      [p0N + widthKm * udN, p0E + widthKm * udE, p0D + widthKm * udD],
+    ];
+
+    var rW =
+      corners.reduce(function (s, c) {
+        return s + Math.hypot(stNorth - c.at(0), stEast - c.at(1));
+      }, 0) / 4;
+
+    var rZ =
+      corners.reduce(function (s, c) {
+        return s + Math.hypot(stNorth - c.at(0), stEast - c.at(1), -c.at(2));
+      }, 0) / 4;
+
+    return { rRup: rRup, rJB: rJB, rW: rW, rZ: rZ };
   },
 
   countUniqueEarthquakes: function (dataArray) {
@@ -16,7 +106,6 @@ App.Utils = {
     var uniqueIds = new Set();
 
     dataArray.forEach(function (d) {
-      // Prüft gängige ID-Spalten in Erdbeben-Datensätzen (z. B. NGA-West2 / PEER)
       var id =
         d["Earthquake ID"] ||
         d["EQID"] ||
@@ -27,7 +116,6 @@ App.Utils = {
       if (id !== undefined && String(id).trim() !== "") {
         uniqueIds.add(String(id).trim());
       } else {
-        // Fallback, falls keine ID-Spalte existiert: Kombination aus Magnitude + Zeit/Ort
         var fallbackKey =
           (d["Earthquake Magnitude"] || "") +
           "_" +

@@ -1,19 +1,19 @@
-window.App = window.App || {}; 
-const App = window.App; 
+window.App = window.App || {};
+const App = window.App;
 const d3 = window.d3;
 
 window.App.Main = {
-  init: function() {
+  init: function () {
     var self = this;
 
-    d3.selectAll("input[type=checkbox].data").on("change", function() {
+    d3.selectAll("input[type=checkbox].data").on("change", function () {
       self.loadSelectedFiles();
     });
 
     this.loadSelectedFiles();
   },
 
-  loadSelectedFiles: function() {
+  loadSelectedFiles: function () {
     var self = this;
     var checkedNodes = d3.selectAll("input[type=checkbox]:checked.data").nodes();
 
@@ -27,8 +27,8 @@ window.App.Main = {
       return;
     }
 
-    var fileNames = checkedNodes.map(function(node) {
-      return node.id.slice(0, -9) + ".csv"; // Entfernt "-checkbox"
+    var fileNames = checkedNodes.map(function (node) {
+      return node.id.slice(0, -9) + ".csv";
     });
 
     d3.select("#file-status")
@@ -36,19 +36,19 @@ window.App.Main = {
       .text("Lade " + fileNames.length + " Datei(en)...");
 
     Promise.all(
-      fileNames.map(function(fileName) {
-        return d3.csv("data/" + fileName).then(function(dataset) {
-          return dataset.map(function(row) {
+      fileNames.map(function (fileName) {
+        return d3.csv("data/" + fileName).then(function (dataset) {
+          return dataset.map(function (row) {
             return self.normalizeRow(row, fileName);
           });
         });
       })
     )
-      .then(function(results) {
+      .then(function (results) {
         var combinedData = results.flat();
         App.Dashboard.render(combinedData, fileNames.join(", "));
       })
-      .catch(function(error) {
+      .catch(function (error) {
         d3.select("#file-status")
           .style("color", "red")
           .text("Fehler beim Laden der CSV-Dateien.");
@@ -56,28 +56,23 @@ window.App.Main = {
       });
   },
 
-
-  normalizeRow: function(row, fileName) {
+  normalizeRow: function (row, fileName) {
     row._sourceFile = fileName;
 
-    
-// 1. PGA (g): ESM liefert cm/s^2 -> durch 980.665 teilen, um g zu erhalten
-if (row["PGA (g)"] === undefined) {
-  var rawPga = row["rotD50_pga"] || row["U_pga"] || row["V_pga"] || row["W_pga"];
-  if (rawPga !== undefined && rawPga !== "") {
-    var pgaCmS2 = App.Utils.parseNum(rawPga);
-    if (!isNaN(pgaCmS2)) {
-      row["PGA (g)"] = pgaCmS2 / 980.665;
+    if (row["PGA (g)"] === undefined) {
+      var rawPga = row["rotD50_pga"] || row["U_pga"] || row["V_pga"] || row["W_pga"];
+      if (rawPga !== undefined && rawPga !== "") {
+        var pgaCmS2 = App.Utils.parseNum(rawPga);
+        if (!isNaN(pgaCmS2)) {
+          row["PGA (g)"] = pgaCmS2 / 980.665;
+        }
+      }
     }
-  }
-}
 
-    // 2. Magnitude: Bevorzugt Mw, sonst ML oder Ms
     if (row["Earthquake Magnitude"] === undefined) {
       row["Earthquake Magnitude"] = row["Mw"] || row["ML"] || row["Ms"];
     }
 
-    // 3. HypD (km): Aus epi_dist und ev_depth_km berechnen (Pythagoras)
     if (row["HypD (km)"] === undefined) {
       var epi = App.Utils.parseNum(row["epi_dist"]);
       var depth = App.Utils.parseNum(row["ev_depth_km"]);
@@ -88,7 +83,6 @@ if (row["PGA (g)"] === undefined) {
       }
     }
 
-    // 4. Weitere Distanz-Metriken für deine Radio-Buttons mappen
     if (row["EpiD (km)"] === undefined && row["epi_dist"] !== undefined) {
       row["EpiD (km)"] = row["epi_dist"];
     }
@@ -99,13 +93,69 @@ if (row["PGA (g)"] === undefined) {
       row["RupD (km)"] = row["rup_dist"];
     }
 
-    // 5. Earthquake ID (Hinweis: In deiner Kopfzeile stand "vent_id" statt "event_id" – beides wird abgedeckt)
     if (row["Earthquake ID"] === undefined) {
-      row["Earthquake ID"] = row["event_id"] || row["vent_id"] || row["USGS_ev_id"] || row["INGV_ev_id"];
+      row["Earthquake ID"] =
+        row["event_id"] || row["vent_id"] || row["USGS_ev_id"] || row["INGV_ev_id"];
+    }
+
+    var cleanNum = function (v) {
+      var n = App.Utils.parseNum(v);
+      return !isNaN(n) && n !== -999 ? n : NaN;
+    };
+
+    var hypLat = cleanNum(
+      row["Hypocenter Latitude (deg)"] !== undefined
+        ? row["Hypocenter Latitude (deg)"]
+        : row["ev_latitude"]
+    );
+    var hypLon = cleanNum(
+      row["Hypocenter Longitude (deg)"] !== undefined
+        ? row["Hypocenter Longitude (deg)"]
+        : row["ev_longitude"]
+    );
+    var hypDepth = cleanNum(
+      row["Hypocenter Depth (km)"] !== undefined
+        ? row["Hypocenter Depth (km)"]
+        : row["ev_depth_km"]
+    );
+    var stLat = cleanNum(
+      row["Station Latitude"] !== undefined ? row["Station Latitude"] : row["st_latitude"]
+    );
+    var stLon = cleanNum(
+      row["Station Longitude"] !== undefined
+        ? row["Station Longitude"]
+        : row["st_longitude"]
+    );
+    var mwVal = cleanNum(row["Earthquake Magnitude"]);
+
+    if (
+      [hypLat, hypLon, hypDepth, stLat, stLon, mwVal].every(function (x) {
+        return !isNaN(x);
+      })
+    ) {
+      var strikeVal = cleanNum(row["Strike (deg)"]);
+      var dipVal = cleanNum(row["Dip (deg)"]);
+      var calc = App.Utils.calcFaultDistances({
+        hypLat: hypLat,
+        hypLon: hypLon,
+        hypDepthKm: Math.max(0, hypDepth),
+        stLat: stLat,
+        stLon: stLon,
+        strikeDeg: !isNaN(strikeVal) ? strikeVal : 0,
+        dipDeg: !isNaN(dipVal) ? dipVal : 90,
+        mw: mwVal,
+        lengthKm: cleanNum(row["Fault Rupture Length for Calculation of Ry (km)"]),
+        widthKm: cleanNum(row["Fault Rupture Width (km)"]),
+        zTorKm: cleanNum(row["Depth to Top Of Fault Rupture Model"]),
+      });
+      row["R_rup_calc (km)"] = calc.rRup;
+      row["R_JB_calc (km)"] = calc.rJB;
+      row["R_w (km)"] = calc.rW;
+      row["R_z (km)"] = calc.rZ;
     }
 
     return row;
-  }
+  },
 };
 
 if (document.readyState === "loading") {
