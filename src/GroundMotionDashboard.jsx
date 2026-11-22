@@ -1,4 +1,4 @@
-import "./d3-global.js";
+import d3 from "./d3-global.js";
 import { useEffect, useRef } from "react";
 import "./ground-motion.css";
 

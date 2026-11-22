@@ -22,7 +22,7 @@ App.ScatterPlot = {
   currentMetric: "HypD (km)",
 
   init: function (containerSelector, validData) {
-    var self = this;
+  //  var self = this;
     var cfg = App.Config.mainChart;
     var magCfg = App.Config.magnitude;
 

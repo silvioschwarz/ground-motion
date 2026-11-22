@@ -13,7 +13,7 @@ App.Dashboard = {
   },
 
   render: function (data, fileName) {
-    var self = this;
+  //  var self = this;
     this.updateAll(false);
 
     this.validData = data.filter(function (d) {
