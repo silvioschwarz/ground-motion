@@ -24,18 +24,24 @@
 
 .ground-motion-app .gm-grid {
   display: grid;
-  grid-template-columns: minmax(230px, 1fr) 4.5fr 2.2fr;
+  grid-template-columns: 2.2fr 1fr;
   gap: 16px;
-  min-height: 680px;
   width: 100%;
   align-items: stretch;
 }
 
+/* Controls wandern über die volle Breite nach unten */
 .ground-motion-app .left-column {
+  order: 3;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  align-items: start;
   min-width: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-right: 4px;
+  overflow: visible;
+  padding-right: 0;
+  
 }
 
 .ground-motion-app .file-upload-box {
@@ -104,7 +110,9 @@
   display: block;
 }
 
+/* Diagramme stehen oben nebeneinander */
 .ground-motion-app .middle-column {
+  order: 1;
   width: 100%;
   min-width: 0;
   min-height: 520px;
@@ -140,6 +148,7 @@
 }
 
 .ground-motion-app .right-column {
+  order: 2;
   min-width: 0;
   min-height: 0;
   display: flex;
