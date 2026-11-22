@@ -1,5 +1,6 @@
-const App = window.App || {};
-import * as d3 from "d3";
+window.App = window.App || {}; 
+const App = window.App; 
+const d3 = window.d3;
 
 window.App.Main = {
   init: function() {
