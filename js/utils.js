@@ -1,4 +1,4 @@
-window.App = window.App || {};
+const App = window.App || {};
 
 App.Utils = {
   parseNum: function (val) {
