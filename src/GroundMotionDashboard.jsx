@@ -71,7 +71,9 @@ export default function GroundMotionDashboard({ preloadedRecords = [] }) {
   return (
     <div ref={rootRef} className="ground-motion-app">
       <div className="gm-header">
-        <h1>Ground Motion Dashboard</h1>
+        <h1>
+          Ground Motion Dashboard
+          </h1>
       </div>
 
       <div className="gm-grid">
@@ -86,9 +88,7 @@ export default function GroundMotionDashboard({ preloadedRecords = [] }) {
             </label>
             <input id="csv-file-input" type="file" accept=".csv" />
             <div id="file-status">Bereit</div>
-          </div>
-
-          <div className="control-group">
+            <div className="control-group">
             <div className="control-group-title">Verfügbare Datenquellen</div>
             <label className="control-row">
               <input
@@ -104,40 +104,9 @@ export default function GroundMotionDashboard({ preloadedRecords = [] }) {
               <span>ESM</span>
             </label>
           </div>
-
-          <div className="control-group">
-            <label className="slider-label">
-              <span>
-                Min. Magnitude: <strong id="mag-value">3.0</strong>
-              </span>
-              <input
-                id="mag-slider"
-                type="range"
-                min="3"
-                max="8"
-                step="0.1"
-                defaultValue="3"
-              />
-            </label>
           </div>
 
-          <div className="control-group">
-            <div className="control-group-title">Achsen & Regression</div>
-            <label className="control-row">
-              <input id="log-x-checkbox" type="checkbox" defaultChecked />
-              <span>Log X-Achse (Distanz)</span>
-            </label>
-            <label className="control-row">
-              <input id="log-y-checkbox" type="checkbox" defaultChecked />
-              <span>Log Y-Achse (PGA)</span>
-            </label>
-            <label className="control-row">
-              <input id="trendline-checkbox" type="checkbox" defaultChecked />
-              <span>Trendlinie anzeigen</span>
-            </label>
-          </div>
-
-          <div className="control-group">
+                    <div className="control-group">
             <div className="control-group-title">Distanz-Metrik</div>
             {[
               ["HypD (km)", "HypD (km)"],
@@ -158,7 +127,103 @@ export default function GroundMotionDashboard({ preloadedRecords = [] }) {
                 <span>{label}</span>
               </label>
             ))}
+          </div>          
+
+            <div>
+          <div className="control-group">
+            <label className="slider-label">
+              <span>
+                Min. Magnitude: <strong id="mag-value">3.0</strong>
+              </span>
+              <input
+                id="mag-slider"
+                type="range"
+                min="3"
+                max="8"
+                step="0.1"
+                defaultValue="3"
+              />
+            </label>
           </div>
+
+          {/* Doppelslider für Min/Max Distanz */}
+          <div className="control-group">
+            <div className="slider-label">
+              <span>
+                Distanz: <strong id="dist-value">0 – 500 km</strong>
+              </span>
+            </div>
+
+            <div className="dual-slider-box">
+              <div className="dual-slider-track" />
+              <div id="dual-slider-fill" className="dual-slider-fill" />
+
+              <input
+                id="dist-min-input"
+                type="range"
+                min="0"
+                max="500"
+                step="5"
+                defaultValue="0"
+                className="dual-range"
+                onPointerDown={(e) => (e.currentTarget.style.zIndex = 5)}
+                onInput={(e) => {
+                  const minEl = e.currentTarget;
+                  const maxEl = document.getElementById("dist-max-input");
+                  const fill = document.getElementById("dual-slider-fill");
+                  if (Number(minEl.value) > Number(maxEl.value)) {
+                    minEl.value = maxEl.value;
+                  }
+                  const p1 = (minEl.value / 500) * 100;
+                  const p2 = (maxEl.value / 500) * 100;
+                  fill.style.left = `${p1}%`;
+                  fill.style.width = `${p2 - p1}%`;
+                }}
+              />
+
+              <input
+                id="dist-max-input"
+                type="range"
+                min="0"
+                max="500"
+                step="5"
+                defaultValue="500"
+                className="dual-range"
+                onPointerDown={(e) => {
+                  e.currentTarget.style.zIndex = 5;
+                  const minEl = document.getElementById("dist-min-input");
+                  if (minEl) minEl.style.zIndex = 3;
+                }}
+                onInput={(e) => {
+                  const maxEl = e.currentTarget;
+                  const minEl = document.getElementById("dist-min-input");
+                  const fill = document.getElementById("dual-slider-fill");
+                  if (Number(maxEl.value) < Number(minEl.value)) {
+                    maxEl.value = minEl.value;
+                  }
+                  const p1 = (minEl.value / 500) * 100;
+                  const p2 = (maxEl.value / 500) * 100;
+                  fill.style.left = `${p1}%`;
+                  fill.style.width = `${p2 - p1}%`;
+                }}
+              />
+            </div>
+          </div>
+</div>
+
+          <div className="control-group">
+            <div className="control-group-title">Achsen</div>
+            <label className="control-row">
+              <input id="log-x-checkbox" type="checkbox" defaultChecked />
+              <span>Log X-Achse (Distanz)</span>
+            </label>
+            <label className="control-row">
+              <input id="log-y-checkbox" type="checkbox" defaultChecked />
+              <span>Log Y-Achse (PGA)</span>
+            </label>
+
+          </div>
+
         </div>
 
         {/* Mittlere Spalte: Canvas + SVG Scatterplot */}

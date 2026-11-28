@@ -1,3 +1,10 @@
+:root{
+  --viz-height: 75dvh;
+}
+
+body{
+  margin:16px
+}
 .ground-motion-app {
   box-sizing: border-box;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -50,7 +57,6 @@
   background: #f3f4f6;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
-  margin-bottom: 16px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -72,7 +78,6 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 18px;
   padding: 12px;
   background: #ffffff;
   border: 1px solid #e5e7eb;
@@ -116,6 +121,7 @@
   width: 100%;
   min-width: 0;
   min-height: 520px;
+  max-height: var(--viz-height);
   display: flex;
   flex-direction: column;
   background: #ffffff;
@@ -151,6 +157,7 @@
   order: 2;
   min-width: 0;
   min-height: 0;
+  max-height: var(--viz-height);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -198,6 +205,95 @@
 .ground-motion-app .grid path {
   stroke-width: 0;
 }
+
+/* =========================================
+   Dual-Range Slider (Min/Max Distanz)
+========================================= */
+.ground-motion-app .dual-slider-box {
+  position: relative;
+  width: 100%;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.ground-motion-app .dual-slider-track,
+.ground-motion-app .dual-slider-fill {
+  position: absolute;
+  height: 5px;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.ground-motion-app .dual-slider-track {
+  width: 100%;
+  background: #e5e7eb;
+  z-index: 1;
+}
+
+.ground-motion-app .dual-slider-fill {
+  left: 0%;
+  width: 100%;
+  background: #2563eb;
+  z-index: 2;
+}
+
+.ground-motion-app input[type="range"].dual-range {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 22px;
+  margin: 0;
+  background: transparent;
+  pointer-events: none;
+  -webkit-appearance: none;
+  appearance: none;
+  z-index: 3;
+}
+
+.ground-motion-app input[type="range"].dual-range:focus {
+  outline: none;
+}
+
+/* Slider-Griff (Chrome, Edge, Safari) */
+.ground-motion-app input[type="range"].dual-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #2563eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.1s ease;
+}
+
+.ground-motion-app input[type="range"].dual-range::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  background: #eff6ff;
+}
+
+/* Slider-Griff (Firefox) */
+.ground-motion-app input[type="range"].dual-range::-moz-range-thumb {
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #2563eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.1s ease;
+}
+
+.ground-motion-app input[type="range"].dual-range::-moz-range-thumb:hover {
+  transform: scale(1.15);
+  background: #eff6ff;
+}
+
 
 @media (max-width: 1024px) {
   .ground-motion-app .gm-grid {
